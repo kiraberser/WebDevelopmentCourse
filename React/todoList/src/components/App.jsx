@@ -1,46 +1,31 @@
 import React, { useState } from "react";
+import ToDoItem from "./ToDoItem";
+import InputArea from "./InputArea";
 
 function App() {
-  const [todo, addTodo] = useState({item: ""})
-  const [items, setItems] = useState([])
+  const [item, setItems] = useState([])
 
-  const handleSubmit = (e) => {
-    const {name, value} = e.target
-    addTodo(() => ({
-      [name]: value
-    }))
+  function deletItem(id) {
+    setItems((prevValue) => {
+      return prevValue.filter((items, index) => {
+        return index !== id
+      })
+    })
   }
-  const handleClick = () => {
-    if (todo.item.trim()) {
-      setItems((prevValue) => [...prevValue, todo.item])
-      addTodo({item: ""})
-    }
-  }
+
   return (
     <div className="container">
       <div className="heading">
         <h1>To-Do List</h1>
       </div>
-      <div className="form">
-        <input 
-          onChange={handleSubmit}
-          type="text"
-          value={todo.item}
-          name="item"
-          onKeyPress={(e) => e.key === "Enter" ? handleClick() : null}
-        />
-        <button 
-          onClick={handleClick}
-        >
-          <span>Add</span>
-        </button>
-      </div>
+      <InputArea 
+        onAdd={setItems}
+      />
       <div>
-        <ul>
-          {items.map((item, index) => (
-            <li className="list-disc ml-10" key={index}>{item}</li>
-          ))}
-        </ul>
+        <ToDoItem 
+          items={item}
+          onChecked={deletItem}
+        />
       </div>
     </div>
   );
