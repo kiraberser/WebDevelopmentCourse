@@ -1,44 +1,34 @@
 import React, { useState } from "react";
 
 function App() {
-  const [headingText, setHeadingText] = useState({
-    fname: "",
-    lname: ""
-  })
+  const [contact, setContact] = useState({
+    fName: "",
+    lName: "",
+    email: ""
+  });
 
   const handleChange = (e) => {
     const {name, value} = e.target
-    setHeadingText((prevValue) => ({
+    setContact((prevValue) => ({
       ...prevValue,
       [name]: value
     }))
   }
 
   const handleClick = (e) => {
-    e.preventDefault()
-    
+    alert(`Enviando la siguiente información: \nNombre: ${contact.fName} \nApellido: ${contact.lName} \nEmail: ${contact.email}`)
   }
 
   return (
     <div className="container">
       <h1>
-        Hello {headingText.fname} {headingText.lname}
+        Hello {contact.fName} {contact.lName}
       </h1>
+      <p>{contact.email}</p>
       <form>
-        <input
-          className="placeholder-slate-300"
-          onChange={handleChange}
-          name="fname" 
-          placeholder="First Name" 
-          value={headingText.fname}
-        />
-        <input 
-          className="placeholder-slate-300"
-          onChange={handleChange}
-          name="lname" 
-          placeholder="Last Name" 
-          value={headingText.lname}
-        />
+        <input onChange={handleChange} value={contact.fName} className="placeholder-slate-300"name="fName" placeholder="First Name" />
+        <input onChange={handleChange} value={contact.lName} className="placeholder-slate-300"name="lName" placeholder="Last Name" />
+        <input onChange={handleChange} value={contact.email} className="placeholder-slate-300"name="email" placeholder="Email" />
         <button onClick={handleClick}>Submit</button>
       </form>
     </div>
@@ -46,5 +36,4 @@ function App() {
 }
 
 export default App;
-
 
