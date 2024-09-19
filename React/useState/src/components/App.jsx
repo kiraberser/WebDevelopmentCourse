@@ -1,22 +1,39 @@
-import { useState } from "react"
-
+import { useState } from "react";
 
 function App() {
-  setInterval(updateTime, 1000)
+  //Create 3 states, 1.- Use the text, 2.- set the name and 3.- the background
+  const [headingText, setHeadingText] = useState("")
+  const [name, setName] = useState("")
+  const [backgroundColor, setBackgroundColor] = useState("")
 
-  let time = new Date().toLocaleTimeString()
-  const [now, getTime] = useState(time)
-  function updateTime() {
-    let newTime = new Date().toLocaleTimeString()
-    getTime(newTime)
+  //When we want to clear the field input, after put the variable we can call setName  
+  const handleSubmit = () => {
+    setHeadingText(name)
+    setName("")
   }
-  return(
-    <div>
-      <h1>{now}</h1>
-      <button onClick={updateTime}>Get Time</button>
+  return (
+    <div className="container">
+      <h1>Hello {headingText}</h1>
+    <form onSubmit={(e) => e.preventDefault()}> 
+      <input 
+        onChange={(e) => setName(e.target.value)}
+        type="text" 
+        placeholder="What's your name?" 
+        value={name}
+      />
+      <button
+        onClick={handleSubmit}
+        onMouseOver={() => setBackgroundColor('black')}
+        onMouseOut={() => setBackgroundColor('white')}
+        onKeyPress={(e) => e.key === 'Enter' ? setHeadingText(name) : null}
+        style={{backgroundColor: backgroundColor, color: '#50a3a2'}}
+        type="submit"
+        >
+          Submit
+      </button>
+      </form>
     </div>
-  )
+  );
 }
-
-export default App
+export default App;
 
