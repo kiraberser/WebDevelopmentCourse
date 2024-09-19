@@ -1,39 +1,50 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 function App() {
-  //Create 3 states, 1.- Use the text, 2.- set the name and 3.- the background
-  const [headingText, setHeadingText] = useState("")
-  const [name, setName] = useState("")
-  const [backgroundColor, setBackgroundColor] = useState("")
+  const [headingText, setHeadingText] = useState({
+    fname: "",
+    lname: ""
+  })
 
-  //When we want to clear the field input, after put the variable we can call setName  
-  const handleSubmit = () => {
-    setHeadingText(name)
-    setName("")
+  const handleChange = (e) => {
+    const {name, value} = e.target
+    setHeadingText((prevValue) => ({
+      ...prevValue,
+      [name]: value
+    }))
   }
+
+  const handleClick = (e) => {
+    e.preventDefault()
+    
+  }
+
   return (
     <div className="container">
-      <h1>Hello {headingText}</h1>
-    <form onSubmit={(e) => e.preventDefault()}> 
-      <input 
-        onChange={(e) => setName(e.target.value)}
-        type="text" 
-        placeholder="What's your name?" 
-        value={name}
-      />
-      <button
-        onClick={handleSubmit}
-        onMouseOver={() => setBackgroundColor('black')}
-        onMouseOut={() => setBackgroundColor('white')}
-        onKeyPress={(e) => e.key === 'Enter' ? setHeadingText(name) : null}
-        style={{backgroundColor: backgroundColor, color: '#50a3a2'}}
-        type="submit"
-        >
-          Submit
-      </button>
+      <h1>
+        Hello {headingText.fname} {headingText.lname}
+      </h1>
+      <form>
+        <input
+          className="placeholder-slate-300"
+          onChange={handleChange}
+          name="fname" 
+          placeholder="First Name" 
+          value={headingText.fname}
+        />
+        <input 
+          className="placeholder-slate-300"
+          onChange={handleChange}
+          name="lname" 
+          placeholder="Last Name" 
+          value={headingText.lname}
+        />
+        <button onClick={handleClick}>Submit</button>
       </form>
     </div>
   );
 }
+
 export default App;
+
 
