@@ -6,9 +6,10 @@ import Home from "./pages/Home"
 import NoteFound from "./pages/NoteFound"
 import ProtectedRoute from "./components/ProtectedRoute"
 
+
 function Logout() {
     localStorage.clear()
-    return <Navigate to="/login/"/>
+    return <Navigate to="/login"/>
 }
 
 function RegisterAndLogout() {
@@ -29,6 +30,7 @@ function App() {
                 }
             />
             <Route path="/login" element={<Login/>}/>
+            <Route path="/logout" element={<Logout/>}/>
             <Route path="/register" element={<RegisterAndLogout/>}/>
             <Route path="*" element={<NoteFound/>}></Route>
         </Routes>

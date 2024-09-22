@@ -69,7 +69,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "corsheaders.middleware.CorsMiddleware",
+    'corsheaders.middleware.CorsMiddleware',  # Añadirlo al principio del middleware
+    'django.middleware.common.CommonMiddleware'
+]
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:5173',  # Agrega el puerto de tu frontend aquí
 ]
 
 ROOT_URLCONF = 'backend.urls'
