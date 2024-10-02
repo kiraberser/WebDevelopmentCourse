@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>French Verb Conjugator</title>
+    <link rel="stylesheet" href="./styles/input.css">
+</head>
+<body>
+    <h1>French Verb Conjugator</h1>
+    <form method="post" action="{% url 'index' %}">
+        {% csrf_token %}
+        <input type="text" name="verb" placeholder="Enter verb" required>
+        <select name="tense" required>
+            <option value="present">Present</option>
+            <option value="passecompose">Passé Composé</option>
+            <option value="futursimple">Futur Simple</option>
+        </select>
+        <button type="submit " class="bg-blue-400 text-zinc-50">Conjugate</button>
+    </form>
+</body>
+</html>
