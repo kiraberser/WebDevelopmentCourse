@@ -1,13 +1,20 @@
 import React from "react";
+import Input from "./Input";
 
 function Form(props) {
   return (
     <form className="form">
-        <input type="text" placeholder="Username" className="placeholder-slate-300"/>
-        <input type="password" placeholder="Password" className="placeholder-slate-300"/>
-        {props.register === false && <input type="password" placeholder="Confirm Password" className="placeholder-slate-300"/>}
+        <Input
+          type={"text"}
+          placeholder={"Username"}
+        />
+        <Input
+          type={"password"}
+          placeholder={"Password"}
+        />
+        {props.register === false && <Input type={"password"} placeholder={"Confirm Password"}/>}
         <button type="submit"> 
-            {props.register ? "False" : "Register"}
+            {props.register ? "Log in" : "Register"}
         </button>
     </form>
   );
