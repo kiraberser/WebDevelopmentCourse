@@ -9,7 +9,5 @@ get_response = requests.get(endpoint, json={"query": "Hello world"})#Http Reques
 #print(get_response.text)
 #print(get_response.status_code)
 
-print(get_response)
-
 #Javascript object nototion JSON -> Python Dict
-#print(get_response.json())
+print(get_response.json())
