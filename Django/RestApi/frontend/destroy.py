@@ -1,6 +1,6 @@
 import requests
 
-product_id = input("What's the id of the product?")
+product_id = input("What's the id of the product?\n")
 try:
     product_id = int(product_id)
 except:
