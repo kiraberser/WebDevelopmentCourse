@@ -12,7 +12,6 @@ class ProductViewSet(viewsets.ModelViewSet):
     patch -> Partial Update
     delete -> destroy
     '''
-    
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     lookup_field = 'pk'
