@@ -11,7 +11,7 @@ class ProductListCreateAPIView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     authentication_classes = [authentication.SessionAuthentication]
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.DjangoModelPermissions]
     
     def perform_create(self, serializer):
         #serializer.save(user=self.request.user)
@@ -27,7 +27,7 @@ class ProductDetailAPIView(generics.RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     authentication_classes = [authentication.SessionAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.DjangoModelPermissions]
     
 product_detail_view = ProductDetailAPIView.as_view()
 
@@ -48,7 +48,7 @@ class ProductUpdateAPIView(generics.UpdateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     authentication_classes = [authentication.SessionAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.DjangoModelPermissions]
     lookup_field = 'pk'
     
     def perform_update(self, serializer):
@@ -121,5 +121,5 @@ def product_alt_view(request, pk=None, *args, **kwargs):
             serializer.save(content=content)
             return Response(serializer.data)
         
-        return Response({"invalid": "not good data"}, status=400)
+        return Response({"invalid": "not good data"}, status=400) 
 
