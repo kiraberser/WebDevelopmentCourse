@@ -2,18 +2,24 @@
 // Se declara un interface para definir las propiedades que se van a recibir
 // Se recibe un string y una funcion que se ejecutara al hacer click en el boton
 
+import React from "react";
+import '../styles.css'
+
 // Tipado de typescript
 // Se declara un interface para definir las propiedades que se van a recibir
 interface Props {
-    label: string;
-    parentMethod: () => void;
+    children: React.ReactNode;
+    parentMethod?: () => void;
+    type: any
 }
 
-export const Button = ({label, parentMethod}: Props ) => {
+
+
+export const Button = ({children, parentMethod, type}: Props ) => {
   return (
     <div>
-        <button className="bg-sky-500 hover:bg-sky-700 p-2 w-50 border rounded-md m-3" onClick={parentMethod}>
-            {label}
+        <button className="p-2 w-70 border rounded-md m-3 cursor-pointer text-white bg-blue-950 hover:bg-blue-800 " type={type} onClick={parentMethod}>
+            {children}
         </button>
     </div>
   )
