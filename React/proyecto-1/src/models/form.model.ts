@@ -11,7 +11,7 @@ export const schema = z.object({
     password: z.string().min(8, { message: 'Password must be at least 8 characters long' }),
     confirmPassword: z.string().min(8, { message: 'Password must be 8 characters long' }),
 }).refine(data => data.password === data.confirmPassword, {
-    message: "Las contraseñas son invalidas",
+    message: "Las contraseñas no son las mismas",
     path: ['confirmPassword']
 })
 
