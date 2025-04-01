@@ -13,8 +13,6 @@ interface Props {
     type: any
 }
 
-
-
 export const Button = ({children, parentMethod, type}: Props ) => {
   return (
     <div>

@@ -2,9 +2,13 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import InputForm from './CustomInput';
 import { FormValues, schema } from '../models';
+import { useContext } from 'react';
+import { ThemeContext } from './ThemeContext';
 //import { Button } from './Button';
 
 const CustomForm = () => {
+    const {theme} = useContext(ThemeContext)
+
     const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>({
         resolver: zodResolver(schema),
         mode: "onBlur"
@@ -28,7 +32,7 @@ const CustomForm = () => {
             <InputForm name="phone" control={control} label="Phone" type="tel" error={errors.phone} />
             <InputForm name="password" control={control} label="Password" type="password" error={errors.password} />
             <InputForm name="confirmPassword" control={control} label="Confirm Password" type="password" error={errors.confirmPassword} />
-            <button type="submit" className='text-blue-700 cursor-pointer bg-blue-100 w-60 m-3 p-2 rounded-lg'>Submit</button>
+            <button type="submit" className={`text-white cursor-pointer ${theme === 'white' ? 'bg-blue-800' : 'bg-black'} w-60 m-3 p-2 rounded-lg`}>Submit</button>
         </form>
     )
 }
