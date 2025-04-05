@@ -26,3 +26,10 @@ dist-ssr
 tsconfig.app.json
 tsconfig.json
 tsconfig.node.json
+
+eslint.config.js
+
+package-lock.json
+package.json
+
+vite.config.ts
