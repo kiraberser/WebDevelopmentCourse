@@ -1,6 +1,7 @@
 import { FormEvent, useContext } from "react";
 import { TodoContext } from "../context/TodoContext";
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from 'react-hot-toast'
 
 interface TodoAppProps {
     task: string;
@@ -34,6 +35,9 @@ export const AddTodo = () => {
             addTodo(task, description)
             form.reset()
         }
+        toast.success('Agregado correctamente', {
+            icon: '✅'
+        })
         navigate('/')
     }
 
@@ -73,6 +77,10 @@ export const AddTodo = () => {
                         Agregar Tarea
                     </button>
                 </form>
+                <Toaster
+                position="bottom-center"
+                reverseOrder={false}
+            />
             </div>
         </div>
     )

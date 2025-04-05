@@ -11,16 +11,10 @@ interface TodoContextType {
     setTodos: React.Dispatch<React.SetStateAction<TodoAppProps[]>>;
 }
 
-const defaultValues: TodoAppProps = {
-    task: '',
-    description: '',
-    completed: false
-}
-
 export const TodoContext = createContext<TodoContextType | null>(null)
 
 export const TodoProvider = ({ children }: { children: ReactNode }) => {
-    const [todos, setTodos] = useState<TodoAppProps[]>([defaultValues])
+    const [todos, setTodos] = useState<TodoAppProps[]>([])
 
     useEffect(() => {
         const storedTodos = localStorage.getItem("todos")

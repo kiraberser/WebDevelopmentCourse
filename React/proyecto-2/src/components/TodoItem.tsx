@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom"
-import { useContext, useState } from "react"
+import { useCallback, useContext, useState } from "react"
 import { TodoContext } from "../context/TodoContext"
 import { useNavigate } from "react-router-dom"
 
@@ -13,7 +13,7 @@ export const TodoItem = () => {
     const [editedDescription, setEditedDescription] = useState(todo.description)
     const [editCheck, setEditCheck] = useState(todo.completed)
 
-    const handleUpdate = () => {
+    const handleUpdate = useCallback(() => {
         const updatedTodos = todos.map((t, i) => 
             i === Number(id) ? { 
                 ...t, 
@@ -25,19 +25,20 @@ export const TodoItem = () => {
         setTodos(updatedTodos)
         localStorage.setItem("todos", JSON.stringify(updatedTodos))
         navigate(`/`)
-    }
+    }, [todos, setTodos, id])
 
-    const handleClick = () => {
+    const handleClick = useCallback(() => {
         const updatedTodos = todos.map((t, i) => 
             i === Number(id) ? { ...t, completed: !t.completed } : t
         )
         setTodos(updatedTodos)
         localStorage.setItem("todos", JSON.stringify(updatedTodos))
-    }
+    }, [todos, setTodos, id])
 
     return(
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
             <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+                <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Editar tarea</h2>
                 <div className="space-y-6">
                     <div className="flex justify-between items-center">
                         <input
@@ -54,7 +55,7 @@ export const TodoItem = () => {
                         </button>
                     </div>
                     
-                    <div className="border-t border-gray-200 pt-4">
+                    <div className="pt-4">
                         <h3 className="text-sm font-medium text-gray-500 mb-2">Descripción</h3>
                         <textarea
                             value={editedDescription}
@@ -85,7 +86,7 @@ export const TodoItem = () => {
                     <div className="flex justify-end">
                         <button
                             onClick={handleUpdate}
-                            className="px-4 py-2 cursor-pointer rounded-md text-white bg-blue-800 hover:bg-blue-900 transition duration-200"
+                            className="px-4 py-2 cursor-pointer rounded-md text-white bg-blue-600 hover:bg-blue-900 transition duration-200"
                         >
                             Actualizar Valores
                         </button>
