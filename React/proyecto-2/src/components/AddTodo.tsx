@@ -36,7 +36,11 @@ export const AddTodo = () => {
             form.reset()
         }
         toast.success('Agregado correctamente', {
-            icon: '✅'
+            icon: '✅', 
+            style: { 
+                backgroundColor: '#5F8B4C',
+                color: 'white'
+            }
         })
         navigate('/')
     }

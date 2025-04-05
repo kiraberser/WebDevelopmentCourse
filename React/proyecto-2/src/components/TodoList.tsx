@@ -1,7 +1,9 @@
-import { useMemo, useCallback, useContext } from "react";
+import { useMemo, useCallback, useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { TodoContext } from "../context/TodoContext";
 import toast, { Toaster } from 'react-hot-toast'
+
+import { Modal } from "./Modal";
 
 interface TodoAppProps {
     task: string;
@@ -15,6 +17,8 @@ interface TodoListProps {
 
 const TodoList = ({ filter }: TodoListProps) => {
     const { todos, setTodos } = useContext(TodoContext)!
+    const [isOpen, setIsOpen] = useState(false)
+    const [todoIndexToDelete, setTodoToDelete] = useState<number | null>(null);
 
     const handleClickEdit = useCallback((index: number) => {
         const updatedTodos = todos.map((t: TodoAppProps, i: number) =>
@@ -25,15 +29,18 @@ const TodoList = ({ filter }: TodoListProps) => {
     }, [todos, setTodos])
 
     const handleClickRemove = useCallback((index: number) => {
-        toast.success('Eliminado Correctamente', {
-            icon: '🗑️',
-            duration: 3000
-        })
         const deleteTodos = todos.filter((_, i: number) => i !== index)
         setTodos(deleteTodos)
-
         localStorage.setItem("todos", JSON.stringify(deleteTodos))
-
+        setIsOpen(false)
+        toast.success('Eliminado Correctamente', {
+            icon: '🗑️',
+            duration: 3000,
+            style: { 
+                backgroundColor: '#5F8B4C',
+                color: 'white'
+            }
+        })
     }, [todos, setTodos])
 
     const filteredTodos = useMemo(() => {
@@ -46,6 +53,7 @@ const TodoList = ({ filter }: TodoListProps) => {
     }, [todos, filter])
 
     return (
+
         <div className="container mx-auto p-4">
             {filteredTodos.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
@@ -57,10 +65,12 @@ const TodoList = ({ filter }: TodoListProps) => {
                                     <p className="text-gray-600 text-sm mb-4 line-clamp-2">{todo.description}</p>
                                 </Link>
                                 <div className="ml-auto">
-
                                     <button
                                         className="cursor-pointer"
-                                        onClick={() => handleClickRemove(index + 1)}
+                                        onClick={() => {
+                                            setTodoToDelete(index + 1)
+                                            setIsOpen(true)
+                                        }}
                                     >
                                         🗑️
                                     </button>
@@ -95,6 +105,7 @@ const TodoList = ({ filter }: TodoListProps) => {
                 position="bottom-center"
                 reverseOrder={false}
             />
+            {isOpen && <Modal setIsOpen={setIsOpen} onConfirm={() => todoIndexToDelete !== null && handleClickRemove(todoIndexToDelete)} />}
         </div>
     )
 }
