@@ -13,7 +13,11 @@ interface Props {
     type: any
 }
 
-export const Button = ({children, parentMethod, type}: Props ) => {
+//React.memo es un HOC(Higuer Order Component, 
+// Memoriza un componente completo, 
+// Evita re-renders cuando las props no cambian
+// En este caso es util porque Button se utiliza varias veces
+export const Button = React.memo(({children, parentMethod, type}: Props ) => {
   return (
     <div>
         <button className="p-2 w-70 border rounded-md m-3 cursor-pointer text-white bg-blue-950 hover:bg-blue-800 " type={type} onClick={parentMethod}>
@@ -21,4 +25,4 @@ export const Button = ({children, parentMethod, type}: Props ) => {
         </button>
     </div>
   )
-}
+})

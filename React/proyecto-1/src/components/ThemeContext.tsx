@@ -1,11 +1,12 @@
 //Importar las dependencias
-import { createContext, ReactNode, useState } from "react";
+import { ReactNode, createContext, useCallback } from "react";
 
 // declarar el typado que se recibe thmeContext
 interface ThemeContextType {
     theme: string,
     toggleTheme: () => void
 }
+
 // colocar el ThemeContext y sus valores por defecto
 export const ThemeContext = createContext<ThemeContextType>({
     theme: 'white',
@@ -18,18 +19,18 @@ interface ThemeProviderProps {
 }
 
 // Declarar el Themeprovider y usar useState para colorcar cariables
+import { useState } from "react";
+
 export const ThemeProvider = ({children}: ThemeProviderProps) => {
-    const [theme, setToggleTheme] = useState('white')
+    const [theme, setTheme] = useState('white')
     const [textColor, setTextColor] = useState('black')
 
-// Crear la funcion toggleTheme y hacer el cambio de color tanto para la letra como para el bg
-    const toggleTheme = (): void => {
-        setToggleTheme(prevTheme => prevTheme === 'white' ? 'black' : 'white')
-        setTextColor(prevColor => prevColor === 'black' ? 'white': 'black')
-    }
+    const toggleTheme = useCallback((): void => {
+        setTheme(prevTheme => prevTheme === 'white' ? 'black' : 'white')
+        setTextColor(prevColor => prevColor === 'black' ? 'white' : 'black')
+    }, [])
 
     return (
-// Retornar el ThemeContext.Provider con sus valores y dentro de un div que tendrá la logica del cambio con el childre
         <ThemeContext.Provider value={{ theme, toggleTheme }}>
             <div className={`bg-${theme} text-${textColor}`}>
                 {children}
@@ -37,6 +38,11 @@ export const ThemeProvider = ({children}: ThemeProviderProps) => {
         </ThemeContext.Provider>
     )
 }
+
+
+// Crear la funcion toggleTheme y hacer el cambio de color tanto para la letra como para el bg
+
+// Retornar el ThemeContext.Provider con sus valores y dentro de un div que tendrá la logica del cambio con el childre
 
 
 

@@ -40,8 +40,8 @@ const Products = () => {
             )}
 
             <div className="flex justify-center mt-6 gap-4">
-                {!showProducts && <Button label="Reload Products" parentMethod={reloadData} />}
-                {showProducts && <Button label="Hide Products" parentMethod={() => setShowProducts(false)} />}
+                {!showProducts && <Button parentMethod={reloadData} type={"button"} >Reload Data</Button>}
+                {showProducts && <Button type={"button"} parentMethod={() => setShowProducts(false)} >Show Products</Button>}
             </div>
         </div>
     );
