@@ -1,5 +1,5 @@
 // app/about/loading.js
-import BlogListSkeleton from '@/app/components/BlogListSkeleton';
+import BlogListSkeleton from "@/app/components/BlogListSkeleton";
 
 export default function Loading() {
   return (
