@@ -1,23 +1,22 @@
+
 import "./global.css";
 
-import {Monsieur_La_Doulaise, Montserrat} from 'next/font/google'
+import { ThemeProvider } from "./contexts/ThemeContext/ThemeProvider";
 
 import Head from "./head";
 import Navbar from "./components/Navbar";
 
-const montserrat = Montserrat({
-  weight:'400',
-  subsets: ['cyrillic']
-})
-
-
 export default function RootLayout({ children }) {
+  
+
   return (
-    <html lang="en" className={montserrat.className}>
+    <html lang="en" className="bg-white">
       <Head />
-      <body className="min-h-screen bg-gray-100 text-gray-800">
-        <Navbar/>
-        <main className="p-6">{children}</main>
+      <body className="min-h-screen">
+        <ThemeProvider>
+          <Navbar/>
+          <main className="p-6">{children}</main>
+        </ThemeProvider>
       </body>
     </html>
   );

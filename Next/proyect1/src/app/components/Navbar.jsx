@@ -1,13 +1,21 @@
+'use client'
+
 import Link from "next/link";
+import { ThemeController } from "./ThemeController";
+import { useContext } from "react";
+import { ThemeContext } from "../contexts/ThemeContext/ThemeContext";
 
 const Navbar = () => {
+    const {theme, toggleTheme} = useContext(ThemeContext)
+  
     return(
-        <nav className="bg-white shadow-md p-4">
+      <nav className={theme === 'dark' ? 'bg-gray-900 shadow-md p-4' : 'bg-white shadow-md p-4'}>
           <ul className="flex justify-center space-x-6">
+            <ThemeController parentMethod={toggleTheme}/>
             <li>
               <Link
                 href="/"
-                className="text-gray-700 hover:text-blue-500 transition-colors"
+                className={theme === 'dark' ? 'text-gray-300 hover:text-blue-400 transition-colors' : 'text-gray-700 hover:text-blue-500 transition-colors'}
               >
                 Home
               </Link>
@@ -15,7 +23,7 @@ const Navbar = () => {
             <li>
               <Link
                 href="/about"
-                className="text-gray-700 hover:text-blue-500 transition-colors"
+               className={theme === 'dark' ? 'text-gray-300 hover:text-blue-400 transition-colors' : 'text-gray-700 hover:text-blue-500 transition-colors'}
               >
                 About
               </Link>
@@ -23,7 +31,7 @@ const Navbar = () => {
             <li>
               <Link
                 href="/blog"
-                className="text-gray-700 hover:text-blue-500 transition-colors"
+               className={theme === 'dark' ? 'text-gray-300 hover:text-blue-400 transition-colors' : 'text-gray-700 hover:text-blue-500 transition-colors'}
               >
                 Blog
               </Link>
@@ -31,12 +39,13 @@ const Navbar = () => {
             <li>
               <Link
                 href="/contact"
-                className="text-gray-700 hover:text-blue-500 transition-colors"
+               className={theme === 'dark' ? 'text-gray-300 hover:text-blue-400 transition-colors' : 'text-gray-700 hover:text-blue-500 transition-colors'}
               >
                 Contact Us
               </Link>
             </li>
           </ul>
+
         </nav>
     )
 }
