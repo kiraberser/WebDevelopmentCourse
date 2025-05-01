@@ -1,40 +1,22 @@
-import Link from "next/link";
-import Head from "./head";
 import "./global.css";
+
+import {Monsieur_La_Doulaise, Montserrat} from 'next/font/google'
+
+import Head from "./head";
+import Navbar from "./components/Navbar";
+
+const montserrat = Montserrat({
+  weight:'400',
+  subsets: ['cyrillic']
+})
+
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={montserrat.className}>
       <Head />
       <body className="min-h-screen bg-gray-100 text-gray-800">
-        <nav className="bg-white shadow-md p-4">
-          <ul className="flex justify-center space-x-6">
-            <li>
-              <Link
-                href="/"
-                className="text-gray-700 hover:text-blue-500 transition-colors"
-              >
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/about"
-                className="text-gray-700 hover:text-blue-500 transition-colors"
-              >
-                About
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/blog"
-                className="text-gray-700 hover:text-blue-500 transition-colors"
-              >
-                Blog
-              </Link>
-            </li>
-          </ul>
-        </nav>
+        <Navbar/>
         <main className="p-6">{children}</main>
       </body>
     </html>

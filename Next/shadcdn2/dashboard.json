@@ -1,0 +1,11 @@
+{
+    "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+    "name": "dashboard-template",
+    "type": "registry:block",
+    "registryDependencies": [
+        "https://ui.shadcn.com/r/styles/new-york-v4/dashboard-01.json",
+        "https://block.so/r/stats-07.json",
+        "https://supabase.com/ui/r/password-based-auth-nextjs.json",
+        "https://tweakcn.com/r/themes/caffeine.json"
+    ]
+}
