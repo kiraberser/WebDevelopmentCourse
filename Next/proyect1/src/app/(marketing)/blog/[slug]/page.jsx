@@ -1,46 +1,71 @@
-'use client'
+import { getPost } from '@/app/actions/blog/actions'
+import Image from 'next/image'
+import { notFound } from 'next/navigation'
 
-import { useParams } from "next/navigation"
-import { useEffect, useState } from "react"
+export async function generateMetadata({ params }) {
+    const {slug} = await params
+    const slugFixed = slug.replace(/%20/g, ' ')
+    try {
+        const post = await getPost(slugFixed)
+        const ogImageUrl = `/api/og?title=${encodeURIComponent(post.title)}&date=${encodeURIComponent(new Date(post.createdAt).toLocaleDateString())}&author=${encodeURIComponent('Blog Author')}`
 
-const BlogPost = () => {
-    const [post, setPost] = useState(null)
-    const params = useParams()
-    
-    useEffect(() => {
-        const fetchPosts = () => {
-            const storedPosts = localStorage.getItem('posts')
-            if (storedPosts) {
-                const posts = JSON.parse(storedPosts)
-                const postFixed = params.slug.replace(/%20/g, ' ')
-                const foundPost = posts.find(p => p.title === postFixed)
-                setPost(foundPost)
+        return {
+            title: `${post.title} | Blog`,
+            description: post.content.substring(0, 160),
+            openGraph: {
+                title: `${post.title} | Blog`,
+                description: post.content.substring(0, 160),
+                type: 'article',
+                publishedTime: post.createdAt,
+                images: [
+                    {
+                        url: ogImageUrl,
+                        width: 1200,
+                        height: 630,
+                        alt: post.title
+                    }
+                ]
             }
         }
-        fetchPosts()
-    }, [params.slug])
-    
-    if (!post) {
-        return(
-            <div className="container mx-auto px-4 py-8">
-                <h1 className="text-2xl font-bold">Post no encontrado</h1>
-            </div>
-        )
+    } catch (error) {
+        console.error('Error generating metadata:', error)
+        return {
+            title: 'Post no encontrado | Blog',
+            description: 'El post que buscas no existe o ha sido eliminado.'
+        }
     }
-
-    return (
-        <div className="container mx-auto px-4 py-8">
-            <article className="max-w-3xl mx-auto">
-                <h1 className="text-2xl font-bold mb-4">{post.title}</h1>
-                <div className="text-gray-600 mb-4">
-                    {new Date(post.createdAt).toLocaleDateString()}
-                </div>
-                <div className="prose lg:prose-xl">
-                    {post.content}
-                </div>
-            </article>
-        </div>
-    )
 }
 
-export default BlogPost
+export default async function BlogPost({ params }) {
+    const {slug} = await params
+    const slugFixed = slug.replace(/%20/g, ' ')
+    try {
+        const post = await getPost(slugFixed)
+        const ogImageUrl = `/api/og?title=${encodeURIComponent(post.title)}&date=${encodeURIComponent(new Date(post.createdAt).toLocaleDateString())}&author=${encodeURIComponent('Blog Author')}`
+        
+        return (
+            <div className="container mx-auto px-4 py-8">
+                <Image 
+                    src={ogImageUrl}
+                    width={1200}
+                    height={330}
+                    alt={post.title}
+                    className='mb-4 rounded-lg shadow-lg'
+                    priority
+                />
+                <article className="max-w-3xl mx-auto">
+                    <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
+                    <div className="text-gray-600 mb-4">
+                        {new Date(post.createdAt).toLocaleDateString()}
+                    </div>
+                    <div className="prose lg:prose-xl">
+                        {post.content}
+                    </div>
+                </article>
+            </div>
+        )
+    } catch (error) {
+        console.error('Error loading post:', error)
+        notFound()
+    }
+}

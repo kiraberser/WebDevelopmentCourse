@@ -1,13 +1,17 @@
+import { Metadata } from 'next'
+
 export const metadata = {
-    title: "Blog",
-    description: "Mira todos nuestros posts publicados.",
-  };
-  
-  export default function BlogLayout({ children }) {
+    title: 'Blog',
+    description: 'Explora nuestros artículos y posts más recientes',
+}
+
+export default function BlogLayout({ children }) {
     return (
-        <div className="container mx-auto p-6">
-          {children}
+        <div className="min-h-screen">
+            <main className="container mx-auto px-4 py-8">
+                {children}
+            </main>
         </div>
-    );
-  }
+    )
+}
   

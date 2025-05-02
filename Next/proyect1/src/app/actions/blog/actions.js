@@ -42,4 +42,27 @@ export async function createPost(prevState, formData) {
 
 export async function getPosts() {
     return posts
+}
+
+export async function getPost(slug) {
+    try {
+        // Decodificar el slug para manejar caracteres especiales
+        const decodedSlug = decodeURIComponent(slug)
+        
+        // Buscar el post por título, ignorando mayúsculas/minúsculas
+        const post = posts.find(p => 
+            p.title.toLowerCase() === decodedSlug.toLowerCase()
+        )
+        
+        if (!post) {
+            console.log('Posts disponibles:', posts.map(p => p.title))
+            console.log('Slug buscado:', decodedSlug)
+            throw new Error('Post not found')
+        }
+
+        return post
+    } catch (error) {
+        console.error('Error fetching post:', error)
+        throw error
+    }
 } 

@@ -1,11 +1,13 @@
 'use client'
 
 import { getPosts } from "@/app/actions/blog"
-import Link from "next/link"
-import { useEffect, useState, useContext } from "react"
 import { ThemeContext } from "@/app/contexts/ThemeContext/ThemeContext"
 
-export default function BlogPage() {
+import Link from "next/link"
+
+import { useEffect, useState, useContext } from "react"
+
+const BlogPage = () => {
   const [posts, setPosts] = useState([])
   const { theme } = useContext(ThemeContext)
 
@@ -55,3 +57,5 @@ export default function BlogPage() {
     </div>
   )
 }
+
+export default BlogPage
