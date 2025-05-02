@@ -1,8 +1,10 @@
 'use client'
-import { useState } from "react"
+import { useState, useContext } from "react"
 import styles from './styles.module.css'
+import { ThemeContext } from "@/app/contexts/ThemeContext/ThemeContext"
 
 export default function ContactUs() {
+  const { theme } = useContext(ThemeContext)
   const [formData, setFormData] = useState(
     {
       name: '',
@@ -23,11 +25,64 @@ export default function ContactUs() {
 
   return (
     <div className={styles.form}>
-      <form method="POST" onSubmit={handleSubmit} className='m-5 p-5 rounded-md bg-blue-600 flex flex-col gap-3 w-1/4 mx-auto'>
-        <input required type="text" value={formData.name} onChange={handleChange} name="name" placeholder='Name'/>
-        <input required type="text" value={formData.email} onChange={handleChange} name="email" placeholder='Email'/>
-        <input required type="text" value={formData.message} onChange={handleChange} name="message" placeholder='Message'/>
-        <button type="submit" className="bg-white rounded-lg hover:bg-blue-100">Submit</button>
+      <form 
+        method="POST" 
+        onSubmit={handleSubmit} 
+        className={`m-5 p-5 rounded-md shadow-2xl flex flex-col gap-3 w-1/4 mx-auto ${
+          theme === 'dark' 
+            ? 'bg-gray-800 text-white' 
+            : 'bg-gray-600 text-white'
+        }`}
+      >
+        <input 
+          required 
+          type="text" 
+          value={formData.name} 
+          onChange={handleChange} 
+          name="name" 
+          placeholder='Name'
+          className={`p-2 rounded-md ${
+            theme === 'dark' 
+              ? 'bg-gray-700 text-white placeholder-gray-400' 
+              : 'bg-white text-gray-800 placeholder-gray-500'
+          }`}
+        />
+        <input 
+          required 
+          type="text" 
+          value={formData.email} 
+          onChange={handleChange} 
+          name="email" 
+          placeholder='Email'
+          className={`p-2 rounded-md ${
+            theme === 'dark' 
+              ? 'bg-gray-700 text-white placeholder-gray-400' 
+              : 'bg-white text-gray-800 placeholder-gray-500'
+          }`}
+        />
+        <input 
+          required 
+          type="text" 
+          value={formData.message} 
+          onChange={handleChange} 
+          name="message" 
+          placeholder='Message'
+          className={`p-2 rounded-md ${
+            theme === 'dark' 
+              ? 'bg-gray-700 text-white placeholder-gray-400' 
+              : 'bg-white text-gray-800 placeholder-gray-500'
+          }`}
+        />
+        <button 
+          type="submit" 
+          className={`btn ${
+            theme === 'dark' 
+              ? 'bg-gray-700 hover:bg-gray-600 text-white' 
+              : 'bg-white hover:bg-gray-100 text-gray-600'
+          }`}
+        >
+          Submit
+        </button>
       </form>
     </div>
   )

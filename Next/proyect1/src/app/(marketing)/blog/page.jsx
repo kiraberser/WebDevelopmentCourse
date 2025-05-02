@@ -1,9 +1,21 @@
+'use client'
+
 import { getPosts } from "@/app/actions/blog"
 import Link from "next/link"
+import { useEffect, useState, useContext } from "react"
+import { ThemeContext } from "@/app/contexts/ThemeContext/ThemeContext"
 
-export default async function BlogPage() {
-  const posts = await getPosts()
-  console.log(posts)
+export default function BlogPage() {
+  const [posts, setPosts] = useState([])
+  const { theme } = useContext(ThemeContext)
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const fetchedPosts = await getPosts()
+      setPosts(fetchedPosts)
+    }
+    fetchPosts()
+  }, [])
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -24,12 +36,12 @@ export default async function BlogPage() {
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {posts.map((post) => (
-            <div key={post.id} className="card bg-base-100 shadow-xl text-white">
+            <div key={post.id} className={`card ${theme === 'dark' ? "bg-gray-800 text-white" : "bg-gray-50 text-black"} shadow-xl`}>
               <div className="card-body">
                 <h2 className="card-title">{post.title}</h2>
                 <p className="line-clamp-3">{post.content}</p>
                 <div className="card-actions justify-end mt-4">
-                  <span className="text-sm text-gray-500">
+                  <span className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
                     {new Date(post.createdAt).toLocaleDateString()}
                   </span>
                 </div>
