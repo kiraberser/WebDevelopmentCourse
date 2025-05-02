@@ -13,6 +13,7 @@ export default function BlogPage() {
     const fetchPosts = async () => {
       const fetchedPosts = await getPosts()
       setPosts(fetchedPosts)
+      localStorage.setItem('posts', JSON.stringify(fetchedPosts))
     }
     fetchPosts()
   }, [])
@@ -40,6 +41,7 @@ export default function BlogPage() {
               <div className="card-body">
                 <h2 className="card-title">{post.title}</h2>
                 <p className="line-clamp-3">{post.content}</p>
+                <Link href={`/blog/${post.title}`} >Ver más.</Link>
                 <div className="card-actions justify-end mt-4">
                   <span className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
                     {new Date(post.createdAt).toLocaleDateString()}
