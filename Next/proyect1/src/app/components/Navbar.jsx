@@ -44,6 +44,14 @@ const Navbar = () => {
                 Contact Us
               </Link>
             </li>
+            <li>
+              <Link
+                href="/sign-up"
+               className={theme === 'dark' ? 'text-gray-300 hover:text-blue-400 transition-colors' : 'text-gray-700 hover:text-blue-500 transition-colors'}
+              >
+                Sign Up
+              </Link>
+            </li>
           </ul>
 
         </nav>

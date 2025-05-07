@@ -2,6 +2,8 @@ import "./global.css";
 
 import { Inter } from "next/font/google";
 
+import { WebVitals } from "./components/web-vitals";
+
 import { ThemeProvider } from "./contexts/ThemeContext/ThemeProvider";
 import Head from "./head";
 import Navbar from "./components/Navbar";
@@ -31,6 +33,7 @@ export default function RootLayout({ children }) {
         <html lang="en" className={`${inter.className} bg-white`}>
             <Head />
             <body className="min-h-screen">
+                <WebVitals/>
                 <ThemeProvider>
                     <Navbar/>
                     <main className="p-6">{children}</main>

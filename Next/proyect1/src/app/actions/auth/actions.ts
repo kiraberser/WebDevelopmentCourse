@@ -1,0 +1,26 @@
+import { SignupFormSchema, FormState } from "@/app/lib/definitions";
+import { redirect } from "next/navigation";
+
+import { hash } from "bcryptjs";
+
+export async function signup(state: FormState, formData: FormData) {
+
+    const validatedFields = SignupFormSchema.safeParse({
+        name: formData.get('name'),
+        email: formData.get('email'),
+        password: formData.get('password'),
+    })
+
+    if(!validatedFields.success) {
+        return{
+            errors: validatedFields.error.flatten().fieldErrors
+        }
+    }
+
+    const {name, email, password} = validatedFields.data
+
+    const hashedPassword = await hash(password, 10)
+
+    console.log(name, email, hashedPassword)
+    redirect('/')
+}
