@@ -1,4 +1,4 @@
-import { getPost } from '@/app/actions/blog/actions'
+import { getPost } from '@/actions/blog/actions'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 

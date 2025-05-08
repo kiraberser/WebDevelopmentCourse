@@ -1,7 +1,7 @@
 'use client'
 
-import { getPosts } from "@/app/actions/blog"
-import { ThemeContext } from "@/app/contexts/ThemeContext/ThemeContext"
+import { getPosts } from "@/actions/blog"
+import { ThemeContext } from "@/contexts/ThemeContext/ThemeContext"
 
 import Link from "next/link"
 

@@ -1,7 +1,7 @@
 'use client'
 import { useState, useContext } from "react"
 import styles from './styles.module.css'
-import { ThemeContext } from "@/app/contexts/ThemeContext/ThemeContext"
+import { ThemeContext } from "@/contexts/ThemeContext/ThemeContext"
 
 export default function ContactUs() {
   const { theme } = useContext(ThemeContext)

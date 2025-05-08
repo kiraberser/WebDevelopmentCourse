@@ -2,11 +2,11 @@ import "./global.css";
 
 import { Inter } from "next/font/google";
 
-import { WebVitals } from "./components/web-vitals";
+import { WebVitals } from "../components/web-vitals";
 
-import { ThemeProvider } from "./contexts/ThemeContext/ThemeProvider";
+import { ThemeProvider } from "../contexts/ThemeContext/ThemeProvider";
 import Head from "./head";
-import Navbar from "./components/Navbar";
+import Navbar from "../components/Navbar";
 
 const inter = Inter({
     subsets: ['latin'],

@@ -1,9 +1,9 @@
 'use client'
 
-import { signup } from "@/app/actions/auth/actions"
+import { signup } from "@/actions/auth/actions"
 import { useActionState, useContext } from "react" 
 
-import {ThemeContext} from '@/app/contexts/ThemeContext/ThemeContext'
+import {ThemeContext} from '@/contexts/ThemeContext/ThemeContext'
 
 const SignupForm = () => {
   const {theme, toggleTheme} = useContext(ThemeContext)

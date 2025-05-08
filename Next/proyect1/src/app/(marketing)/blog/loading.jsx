@@ -1,4 +1,4 @@
-const { default: BlogListSkeleton } = require("@/app/components/BlogListSkeleton")
+const { default: BlogListSkeleton } = require("@/components/BlogListSkeleton")
 
 const Loading = () => {
     return (

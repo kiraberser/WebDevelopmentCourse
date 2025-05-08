@@ -1,6 +1,6 @@
 'use client'
 
-import { createPost } from "@/app/actions/blog"
+import { createPost } from "@/actions/blog"
 import { useActionState } from "react"
 import { redirect } from "next/navigation"
 
