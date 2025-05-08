@@ -2,26 +2,10 @@
 import { ThemeContext } from "../contexts/ThemeContext/ThemeContext"
 import { useContext } from "react"
 
+import features from '@/constants/features'
+
 export default function FeaturesSection({ scrollProgress }) {
   const { theme } = useContext(ThemeContext)
-  
-  const features = [
-    {
-      icon: '🚀',
-      title: 'Rendimiento Óptimo',
-      description: 'Optimizado para la mejor experiencia de usuario'
-    },
-    {
-      icon: '💡',
-      title: 'Diseño Moderno',
-      description: 'Interfaz limpia y contemporánea'
-    },
-    {
-      icon: '⚡',
-      title: 'Velocidad',
-      description: 'Carga rápida y navegación fluida'
-    }
-  ]
 
   return (
     <section id="features" className="py-20" style={{ backgroundColor: theme === 'dark' ? '#1F2937' : '#FFFFFF' }}>
@@ -40,7 +24,7 @@ export default function FeaturesSection({ scrollProgress }) {
           {features.map((feature, index) => (
             <div 
               key={index}
-              className="p-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2"
+              className="p-6 rounded-lg shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
               style={{
                 opacity: Math.min(1, (scrollProgress - (0.3 + index * 0.1)) * 5),
                 transform: `translateY(${Math.max(0, 50 - (scrollProgress - (0.3 + index * 0.1)) * 250)}px)`,

@@ -1,58 +1,37 @@
 'use client'
 
 import Link from "next/link";
-import { ThemeController } from "./ThemeController";
+import clsx from 'clsx'
 import { useContext } from "react";
+
+import { ThemeController } from "./ThemeController";
 import { ThemeContext } from "../contexts/ThemeContext/ThemeContext";
+
+import navLinks from "@/constants/navLinks"
 
 const Navbar = () => {
   const { theme, toggleTheme } = useContext(ThemeContext)
 
   return (
-    <div className="relative">
+    <div className="relative mb-10">
       <nav className={`${theme === 'dark' ? 'bg-gray-900' : 'bg-white'} fixed top-0 w-full shadow-md p-4 z-50`}>
         <ul className="flex justify-center space-x-6">
           <ThemeController parentMethod={toggleTheme} />
-          <li>
-            <Link
-              href="/"
-              className={theme === 'dark' ? 'text-gray-300 hover:text-blue-400 transition-colors' : 'text-gray-700 hover:text-blue-500 transition-colors'}
-            >
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/about"
-              className={theme === 'dark' ? 'text-gray-300 hover:text-blue-400 transition-colors' : 'text-gray-700 hover:text-blue-500 transition-colors'}
-            >
-              About
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/blog"
-              className={theme === 'dark' ? 'text-gray-300 hover:text-blue-400 transition-colors' : 'text-gray-700 hover:text-blue-500 transition-colors'}
-            >
-              Blog
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/contact"
-              className={theme === 'dark' ? 'text-gray-300 hover:text-blue-400 transition-colors' : 'text-gray-700 hover:text-blue-500 transition-colors'}
-            >
-              Contact Us
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/sign-up"
-              className={theme === 'dark' ? 'text-gray-300 hover:text-blue-400 transition-colors' : 'text-gray-700 hover:text-blue-500 transition-colors'}
-            >
-              Sign Up
-            </Link>
-          </li>
+          {navLinks.map(({ href, label }) => (
+            <li key={href}>
+              <Link
+                href={href}
+                className={clsx(
+                  'transition-colors',
+                  theme === 'dark'
+                    ? 'text-gray-300 hover:text-blue-400'
+                    : 'text-gray-700 hover:text-blue-500'
+                )}
+              >
+                {label}
+              </Link>
+            </li>
+          ))}
         </ul>
 
       </nav>

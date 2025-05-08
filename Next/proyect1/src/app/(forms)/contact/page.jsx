@@ -24,7 +24,7 @@ export default function ContactUs() {
   }
 
   return (
-    <div className={styles.form}>
+    <div className={'h-screen flex items-center'}>
       <form 
         method="POST" 
         onSubmit={handleSubmit} 

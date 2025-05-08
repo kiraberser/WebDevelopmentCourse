@@ -30,13 +30,13 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
     return (
-        <html lang="en" className={`${inter.className} bg-white`}>
+        <html lang="en" className={inter.className}>
             <Head />
             <body className="min-h-screen">
                 <WebVitals/>
                 <ThemeProvider>
                     <Navbar/>
-                    <main className="p-6">{children}</main>
+                    <main>{children}</main>
                 </ThemeProvider>
             </body>
         </html>

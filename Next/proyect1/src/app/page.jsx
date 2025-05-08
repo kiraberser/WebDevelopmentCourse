@@ -1,10 +1,14 @@
 'use client'
 import { ReactLenis, useLenis } from 'lenis/react'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { ProgressBar, HeroSection, FeaturesSection, Footer } from '../components'
+import clsx from 'clsx'
+import { themedBg } from '@/utils/themeClass'
+import { ThemeContext } from '@/contexts/ThemeContext/ThemeContext'
 
 export default function Home() {
   const [scrollProgress, setScrollProgress] = useState(0)
+  const {theme} = useContext(ThemeContext)
 
   // Usar el hook useLenis para manejar el scroll
   const lenis = useLenis(({ scroll, limit, velocity, direction, progress }) => {
@@ -32,7 +36,7 @@ export default function Home() {
         infinite: false,
       }}
     >
-      <main className="min-h-screen">
+      <main className={clsx("min-h-screen", themedBg(theme, 'bg-gray-900', 'bg-white' ))}>
         <ProgressBar progress={scrollProgress} />
         <HeroSection 
           scrollProgress={scrollProgress} 

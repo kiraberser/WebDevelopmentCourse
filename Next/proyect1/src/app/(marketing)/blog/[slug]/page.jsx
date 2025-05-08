@@ -7,7 +7,7 @@ export async function generateMetadata({ params }) {
     const slugFixed = slug.replace(/%20/g, ' ')
     try {
         const post = await getPost(slugFixed)
-        const ogImageUrl = `/api/og?title=${encodeURIComponent(post.title)}&date=${encodeURIComponent(new Date(post.createdAt).toLocaleDateString())}&author=${encodeURIComponent('Blog Author')}`
+        const ogImageUrl = `/api/og?title=${encodeURIComponent(post.title)}&date=${encodeURIComponent(new Date(post.createdAt).toLocaleDateString())}&author=${encodeURIComponent('Edwin')}`
 
         return {
             title: `${post.title} | Blog`,
@@ -41,7 +41,7 @@ export default async function BlogPost({ params }) {
     const slugFixed = slug.replace(/%20/g, ' ')
     try {
         const post = await getPost(slugFixed)
-        const ogImageUrl = `/api/og?title=${encodeURIComponent(post.title)}&date=${encodeURIComponent(new Date(post.createdAt).toLocaleDateString())}&author=${encodeURIComponent('Blog Author')}`
+        const ogImageUrl = `/api/og?title=${encodeURIComponent(post.title)}&date=${encodeURIComponent(new Date(post.createdAt).toLocaleDateString())}&author=${encodeURIComponent('Edwin')}`
         
         return (
             <div className="container mx-auto px-4 py-8">
@@ -50,7 +50,7 @@ export default async function BlogPost({ params }) {
                     width={1200}
                     height={330}
                     alt={post.title}
-                    className='mb-4 rounded-lg shadow-lg'
+                    className='mb-4 rounded-lg shadow-lg mx-auto'
                     priority
                 />
                 <article className="max-w-3xl mx-auto">

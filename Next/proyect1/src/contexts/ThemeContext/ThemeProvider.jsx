@@ -23,12 +23,13 @@ export const ThemeProvider = ({ children }) => {
 
     useEffect(() => {
         localStorage.setItem('theme', theme);
-        document.documentElement.classList.toggle('dark:bg-gray-900', theme === 'dark');
+        document.documentElement.classList.remove('light', 'dark');
+        document.documentElement.classList.add(theme);
     }, [theme]);
 
     return (
         <ThemeContext.Provider value={{ theme, toggleTheme }}>
-            <div className={`transition-colors duration-300 ${montserrat.className} ${theme === 'dark' ? 'text-white' : "text-black"}`}>
+            <div className={`transition-colors duration-300 ${montserrat.className} ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
                 {children}
             </div>
         </ThemeContext.Provider>
