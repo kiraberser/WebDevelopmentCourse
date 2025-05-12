@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="flex flex-col  h-screen w-100">
+<div class='text-black m-5  flex flex-col'>
+    {% if user.is_authenticated %}
+    <h2 class='text-4xl'>¡Bienvenido {{ user.username }}!</h2>
+    <a href="{% url 'create_product' %}" class="btn btn-primary mt-5 ">Crear Producto</a>
+    <a href="{% url 'products' %}" class="btn btn-neutral mt-5">Ver Productos</a>
+    <div class="w-100">
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline btn-primary mt-5 w-100">Log Out</button>
+        </form>
+    </div>
+    {% else %}
+    <h2 class='text-4xl'>¡Bienvenido a mi página de inicio!</h2>
+    <a href="{% url 'login' %}" class="btn btn-primary mt-5">Iniciar Sesión</a>
+    {% endif %}
+</div>
+</section>
+{% endblock %}

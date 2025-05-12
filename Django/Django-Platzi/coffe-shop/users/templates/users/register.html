@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% load tailwind_filters %}
+
+{% block content %}
+
+    <div class="min-h-screen bg-base-200 flex items-center justify-center px-4 py-12  " data-theme="light">
+  <div class="max-w-md w-full bg-base-100 rounded-lg shadow-xl overflow-hidden">
+    
+    <!-- Card Header -->
+    <div class="bg-primary text-primary-content p-6 text-center">
+      <h2 class="text-2xl font-bold">Welcome to our website</h2>
+      <p class="opacity-80 mt-1">Register to your account</p>
+    </div>
+    
+    <!-- Card Body -->
+    <div class="p-6 md:p-8">
+      <form method="post" class="space-y-6">
+        {% csrf_token %}
+
+        <!-- Error messages -->
+        {% if form.non_field_errors %}
+        <div class="alert alert-error text-sm">
+          {% for error in form.non_field_errors %}
+            <div>{{ error }}</div>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="form-control w-full">
+          {{ form.username|as_crispy_field }}
+          {{ form.password1|as_crispy_field }}
+          {{ form.password2|as_crispy_field }}
+        </div>
+        
+        <!-- Submit Button -->
+        <div>
+          <button type="submit" class="btn btn-primary w-full">Register</button>
+        </div>
+      </form>
+      
+      <!-- Links -->
+      <div class="divider mt-8 mb-6">or</div>
+      <div>
+        <a type="submit" href="{% url 'login' %}" class="btn btn-outline btn-primary w-full mb-4">Log In</a>
+      </div>
+      
+      <div class="text-center space-y-4">
+        {% if password_reset_url %}
+        <a href="{{ password_reset_url }}" class="link link-primary text-sm">Forgot your password?</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

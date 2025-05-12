@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="flex items-center justify-center  bg-base-100 text-black" data-theme="light">
+    <div class="w-full max-w-md p-8 bg-white rounded-lg shadow-2xl border-2 border-gray-300">
+        <h1 class="text-3xl font-bold mb-6 text-center text-primary">Create Product</h1>
+        <form method="post" action="{% url 'create_product' %}" enctype="multipart/form-data" class="space-y-4">
+            {% csrf_token %}
+            <div class="space-y-4">
+                {{ form.as_p }}
+            </div>
+            <button type="submit" class="btn btn-primary w-full">Add Product</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

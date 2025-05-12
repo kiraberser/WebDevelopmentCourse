@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" data-theme="light">
+    <h1 class="text-2xl font-bold">Profile</h1>
+    <p class="text-lg">Username: {{ user.username }}</p>
+    <a href="{% url 'create_product' %}" class="btn btn-primary mt-5">Crear Producto</a>
+    <a href="{% url 'logout' %}" class="btn btn-outline btn-primary mt-5">Cerrar Sesión</a>
+</div>
+{% endblock %}
+
+
