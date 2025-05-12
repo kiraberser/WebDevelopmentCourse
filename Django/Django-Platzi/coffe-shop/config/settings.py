@@ -89,9 +89,21 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': env.db('DJANGO_DB_URL')
-}
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': env('DJANGO_DB_NAME'),
+            'USER': env('DJANGO_DB_USER'),
+            'PASSWORD': env('DJANGO_DB_PASSWORD'),
+            'HOST': env('DJANGO_DB_HOST'),
+            'PORT': env('DJANGO_DB_PORT'),
+        }
+    }
+else:
+    DATABASES = {
+        'default': env.db('DJANGO_DB_URL')
+    }
 
 
 # Password validation
