@@ -31,7 +31,11 @@ SECRET_KEY = env.str('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://94bf-189-192-83-91.ngrok-free.app",  # pon aquí tu dominio ngrok actual
+]
 
 
 # Application definition
@@ -45,7 +49,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'tailwind',
     'crispy_tailwind',
-    'coffe_styles',
     'crispy_forms',
     'rest_framework',
     'django_browser_reload',
@@ -71,7 +74,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'coffe_styles' / 'templates', BASE_DIR / 'coffe' / 'templates'],
+        'DIRS': [BASE_DIR / 'templates', BASE_DIR / 'coffe' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -140,12 +143,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/css/dist/'
+STATIC_URL = 'static/'
 
-CAFE_THEME ='cafe'
-DARK_THEME ='dark'
 
-TAILWIND_APP_NAME = 'coffe_styles'
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
 
 NPM_BIN_PATH = 'npm.cmd'
 
@@ -161,10 +165,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-STATICFILES_DIRS = [
-    BASE_DIR / "coffe_styles/static/css/dist",  # Apunta a la carpeta 'static' de tu app
-]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 

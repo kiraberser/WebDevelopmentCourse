@@ -1,0 +1,189 @@
+{% block navbar %}
+<!-- Navbar -->
+<header class="sticky top-0 z-50 w-full">
+  <!-- Announcement Bar (optional) -->
+  <div class="bg-white text-primary py-2">
+    <div class="container mx-auto px-4">
+      <div class="text-center text-sm font-space">
+        <span class="font-medium">¡Envío gratis en compras mayores a $500!</span> <span
+          class="hidden md:inline">Aprovecha nuestras promociones mensuales.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Navbar -->
+  <nav class="bg-base-100 border-b border-base-200 shadow-sm">
+    <div class="container mx-auto px-4">
+      <div class="navbar min-h-16 px-0">
+        <!-- Mobile Menu Button -->
+        <div class="navbar-start">
+          <div class="dropdown">
+            <label tabindex="0" class="btn btn-ghost lg:hidden">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-menu">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+              </svg>
+            </label>
+            <ul tabindex="0"
+              class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow-lg bg-white border-2 border-gray-200 rounded-box w-64 font-inter">
+              <li><a class="py-3 font-medium" href="/">Inicio</a></li>
+              <li>
+                <a class="py-3 font-medium">Productos</a>
+                <ul class="p-2 bg-white border-2 border-gray-200">
+                  <li><a href="/products">Café de Especialidad</a></li>
+
+                </ul>
+              </li>
+              <li><a class="py-3 font-medium" href="#">Nosotros</a></li>
+              <li><a class="py-3 font-medium" href="#">Nuestro Proceso</a></li>
+            </ul>
+          </div>
+
+          <!-- Logo -->
+          <a href="/" class="flex items-center gap-3">
+            <div class="hidden md:flex w-10 h-10 rounded-full bg-primary items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-coffee">
+                <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+                <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+                <line x1="6" y1="1" x2="6" y2="4"></line>
+                <line x1="10" y1="1" x2="10" y2="4"></line>
+                <line x1="14" y1="1" x2="14" y2="4"></line>
+              </svg>
+            </div>
+            <div class="font-lora font-bold text-xl md:text-2xl">Café Aroma</div>
+          </a>
+        </div>
+
+        <!-- Desktop Menu -->
+        <div class="navbar-center hidden lg:flex">
+          <ul class="menu menu-horizontal px-1 font-inter">
+            <li><a class="hover:text-primary" href="/">Inicio</a></li>
+            <li><a class="hover:text-primary" href="#">Nosotros</a></li>
+            <li><a class="hover:text-primary" href="#">Nuestro Proceso</a></li>
+            
+            <li tabindex="0">
+              <details>
+                <summary class="hover:text-primary">Productos</summary>
+                <ul class="p-2 bg-white border-2 border-gray-200 shadow-md rounded-box min-w-52 z-[1]">
+                  <li><a href="/products">Café de Especialidad</a></li>
+                  {% if user.is_authenticated or user.is_superuser %}
+                  <li><a href="/products/create">Crear Producto</a></li>
+                  {% endif %}
+                </ul>
+              </details>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Right Icons -->
+        <div class="navbar-end">
+          <!-- Search Button -->
+          <!-- <button class="btn btn-ghost btn-circle">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-search">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button> -->
+
+          <!-- Shopping Cart -->
+          <div class="dropdown dropdown-end ml-1">
+            <label tabindex="0" class="btn btn-ghost btn-circle">
+              <div class="indicator">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-shopping-bag">
+                  <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                  <line x1="3" y1="6" x2="21" y2="6"></line>
+                  <path d="M16 10a4 4 0 0 1-8 0"></path>
+                </svg>
+                <span class="badge badge-sm indicator-item badge-primary">3</span>
+              </div>
+            </label>
+            <div tabindex="0" class="mt-3 z-[1] card card-compact dropdown-content w-72 bg-white border-2 border-gray-200 shadow-lg">
+              <div class="card-body">
+                <h3 class="font-space font-medium text-lg">Tu Carrito</h3>
+                <div class="divide-y">
+                  <!-- Cart Item 1 -->
+                  <div class="py-3 flex gap-3">
+                    <img src="/media/coffe/products/Latte/latte.png" alt="Café de Especialidad" class="w-16 h-16 rounded">
+                    <div class="flex-1">
+                      <h4 class="font-medium">Café de Latte</h4>
+                      <p class="text-sm text-base-content/70">1 × $180.00</p>
+                    </div>
+                  </div>
+                  <!-- Cart Item 2 -->
+                  <div class="py-3 flex gap-3">
+                    <img src="/media/coffe/products/Espresso/expresso.png" alt="Café de Especialidad" class="w-16 h-16 rounded">
+                    <div class="flex-1">
+                      <h4 class="font-medium">Café de Especialidad</h4>
+                      <p class="text-sm text-base-content/70">1 × $650.00</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-2 flex justify-between font-medium">
+                  <span>Total</span>
+                  <span>$830.00</span>
+                </div>
+                <div class="card-actions mt-4">
+                  <a href="#" class="btn btn-outline w-full">Ver Carrito</a>
+                  <a href="#" class="btn btn-primary w-full">Pagar Ahora</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- User Account -->
+          {% if user.is_authenticated %}
+          <div class="dropdown dropdown-end">
+            <label tabindex="0" class="btn btn-ghost btn-circle">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-user">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </label>
+            <ul tabindex="0"
+              class="menu dropdown-content mt-3 z-[1] p-2 shadow-lg bg-white border-2 border-gray-200 rounded-box w-52 font-inter">
+              <li><h1 class="text-lg font-bold">Hola {{ user.username }}</h1></li>
+              <li><a href="/users/profile">Mi Cuenta</a></li>
+              <li><a href="/orders/my-orders">Mis Pedidos</a></li>
+              <li><a href="#">Favoritos</a></li>
+
+              <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary mt-5 w-full mb-2">Log Out</button>
+              </form>
+            </ul>
+          </div>
+          {% else %}
+          <div class="dropdown dropdown-end">
+            <label tabindex="0" class="btn btn-ghost btn-circle">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-user">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </label>
+
+              <ul tabindex="0"
+                class="menu dropdown-content mt-3 z-[1] p-2 shadow-lg bg-white border-2 border-gray-200 rounded-box w-52 font-inter">
+                <li><a href="/users/login" class="btn btn-primary mt-5 w-full mb-2">Log In</a></li>
+                <li><a href="/users/register" class="btn btn-outline btn-secondary ">Register</a></li>
+              </ul>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+{% endblock %}

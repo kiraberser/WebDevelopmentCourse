@@ -1,12 +1,22 @@
 {% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
 {% block content %}
-<div class="flex items-center justify-center  bg-base-100 text-black" data-theme="light">
-    <div class="w-full max-w-md p-8 bg-white rounded-lg shadow-2xl border-2 border-gray-300">
+<div class="flex items-center min-h-screen justify-center" >
+    <div class="w-full max-w-md p-8 rounded-lg shadow-2xl border-2 border-gray-300">
         <h1 class="text-3xl font-bold mb-6 text-center text-primary">Create Product</h1>
         <form method="post" action="{% url 'create_product' %}" enctype="multipart/form-data" class="space-y-4">
             {% csrf_token %}
             <div class="space-y-4">
-                {{ form.as_p }}
+                {{ form.name|as_crispy_field }}
+                {{ form.description|as_crispy_field }}
+                {{ form.price|as_crispy_field }}
+                {{ form.available|as_crispy_field }}
+            </div>
+            <div class="form-group text-black">
+                <label class="block mb-2 text-sm font-medium text-gray-700" for="id_image">Product Image</label>
+                <input type="file" name="image" id="id_image" class="file-input file-input-bordered file-input-secondary w-full bg-gray-100" />
             </div>
             <button type="submit" class="btn btn-primary w-full">Add Product</button>
         </form>

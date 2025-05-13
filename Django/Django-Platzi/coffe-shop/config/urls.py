@@ -22,7 +22,7 @@ from django.views.generic import TemplateView
 
 
 urlpatterns = [
-    path('', include('coffe.urls')),
+    path('products/', include('coffe.urls')),
     path('admin/', admin.site.urls),
     path("__reload__/", include("django_browser_reload.urls")),
     path('users/', include('users.urls')),

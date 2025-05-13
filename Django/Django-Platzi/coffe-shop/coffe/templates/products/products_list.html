@@ -1,14 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container mx-auto px-4 py-8 min-h-screen w-full" data-theme="light">
-    <h1 class="text-3xl font-bold mb-6 text-primary">Our Coffees</h1>
+<div class="container mx-auto px-4 py-8 min-h-screen w-full" >
+    <h1 class="text-3xl font-bold mb-6 text-primary">Nuestros Cafés</h1>
     
     {% if user.is_authenticated %}
-       <h1 class="text-3xl font-bold mb-6 text-neutral">Welcome {{ user.username }}!</h1>
+       <h1 class="text-3xl font-bold mb-6 text-neutral">Bienvenido {{ user.username }}!</h1>
     
     {% else %}
-       <h1 class="text-3xl font-bold mb-6 text-neutral">Welcome to our website!</h1>
-       <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+       <h1 class="text-3xl font-bold mb-6 text-neutral">Bienvenidos!</h1>
     {% endif %}
 
     <!-- Search and Filter Bar -->
@@ -33,7 +32,7 @@
     </div>
     
     <!-- Product Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 border-2 rounded-lg p-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6  rounded-lg p-4">
         {% for product in products %}
         <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300 border-2 border-gray-300 rounded-lg">
             {% if product.image %}
@@ -61,15 +60,13 @@
                 <p class="text-xl font-bold text-primary">${{ product.price }}</p>
                 
                 <p class="text-sm text-base-content opacity-80 line-clamp-3">{{ product.description }}</p>
-                
+<!-- 
                 <form action="{% url 'add_order' %}" method="post">
                     {% csrf_token %}
                     <input type="hidden" name="product_id" value="{{ product.id }}">
-                    <button type="submit" class="btn btn-primary btn-sm">Add to Cart</button>
-                </form>
-                <div class="card-actions justify-end mt-4">
-                    <a href="#" class="btn btn-outline btn-sm">Details</a>
-                </div>
+                    <button type="submit" class="btn btn-primary btn-sm">Agregar al carrito</button>
+                </form> -->
+                <button type="submit" class="btn btn-primary btn-sm">Agregar al carrito</button>
             </div>
         </div>
         {% endfor %}

@@ -1,17 +1,16 @@
-{% load static tailwind_tags %}
 <!DOCTYPE html>
-<html lang="en" data-theme="cafe">
-	<head>
-    <title>Django Tailwind</title>
+<html lang="en" data-theme="coffee">
+    <head>
+        <title>Django Tailwind</title>
+        {% load static  %}
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
-		<link rel="stylesheet" href="{% static 'src/styles.css' %}">
-		{% tailwind_css %}
+		<link rel="stylesheet" href="{% static 'css/src/output.css' %}">
 	</head>
-	<body class="bg-gray-50 font-sans  leading-normal tracking-normal">
+	<body class="font-sans  leading-normal tracking-normal">
 		{% include 'navbar.html' %}
-		<div data-theme="light">
+		<div class="bg-gray-50">
 			<section >
 				{% block content %}
 
