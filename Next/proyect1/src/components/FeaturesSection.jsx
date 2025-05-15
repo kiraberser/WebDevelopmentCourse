@@ -24,7 +24,7 @@ export default function FeaturesSection({ scrollProgress }) {
           {features.map((feature, index) => (
             <div 
               key={index}
-              className="p-6 rounded-lg shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
+              className="p-6 border border-gray-200 rounded-lg shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
               style={{
                 opacity: Math.min(1, (scrollProgress - (0.3 + index * 0.1)) * 5),
                 transform: `translateY(${Math.max(0, 50 - (scrollProgress - (0.3 + index * 0.1)) * 250)}px)`,

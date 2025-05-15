@@ -1,15 +1,53 @@
 'use client'
 
-import { signup } from "@/actions/auth/"
-import { useActionState, useContext } from "react" 
-import clsx from 'clsx'
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useContext } from "react";
+import clsx from 'clsx';
 
-import {ThemeContext} from '@/contexts/ThemeContext/ThemeContext'
-import { themedBg } from "@/utils/themeClass"
+import { ThemeContext } from '@/contexts/ThemeContext/ThemeContext';
+import { themedBg } from "@/utils/themeClass";
+import { signup } from '@/actions/auth';
+import { FormValues, schema } from '@/schema/';
+import InputForm from '@/components/InputForm';
 
 const SignupForm = () => {
-  const {theme} = useContext(ThemeContext)
-  const [state, action, pending] = useActionState(signup, undefined)
+  const { theme } = useContext(ThemeContext);
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    reset
+  } = useForm<FormValues>({
+    resolver: zodResolver(schema),
+    mode: 'onBlur',
+    defaultValues: {
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: ''
+    }
+  });
+
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
+    console.log('Form data:', data);
+    reset({
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: ''
+    });
+
+    signup(data)
+      .then((response) => {
+        console.log('Signup response:', response);
+        // Handle successful signup (e.g., redirect, show success message)
+      })
+      .catch((error) => {
+        console.error('Signup error:', error);
+      });
+  };
 
   return (
     <div className={clsx('hero min-h-screen', themedBg(theme, 'bg-gray-900', 'bg-white'))}>
@@ -19,87 +57,30 @@ const SignupForm = () => {
           <p className={clsx('py-6', themedBg(theme, 'text-gray-300', 'text-gray-600'))}>Create your account to get started</p>
         </div>
         <div className={clsx('card flex-shrink-0 w-full max-w-sm shadow-2xl', themedBg(theme, 'bg-gray-800', 'bg-base-100'))}>
-          <form action={action} className="card-body ">
-            <div className="form-control">
-              <label className="label" htmlFor="name">
-                <span className={clsx('label-text', themedBg(theme, 'text-gray-300', 'text-white'))}>Name</span>
-              </label>
-              <input 
-                id="name" 
-                name="name" 
-                type="text" 
-                placeholder="Enter your name" 
-                className={clsx('input input-bordered', themedBg(theme, 'bg-gray-700 text-white border-gray-600', 'text-white'))}
-              />
-              {state?.errors?.name && (
-                <label className="label">
-                  <span className="label-text-alt text-error">{state.errors.name}</span>
-                </label>
-              )}
-            </div>
-
-            <div className="form-control">
-              <label className="label" htmlFor="email">
-                <span className={clsx('label-text', themedBg(theme, 'text-gray-300', 'text-white'))}>Email</span>
-              </label>
-              <input 
-                id="email" 
-                name="email" 
-                type="email" 
-                placeholder="Enter your email" 
-                className={clsx('input input-bordered', themedBg(theme, 'bg-gray-700 text-white border-gray-600', 'text-white'))}
-              />
-              {state?.errors?.email && (
-                <label className="label">
-                  <span className="label-text-alt text-error">{state.errors.email}</span>
-                </label>
-              )}
-            </div>
-
-            <div className="form-control">
-              <label className="label" htmlFor="password">
-                <span className={clsx('label-text', themedBg(theme, 'text-gray-300', 'text-white'))}>Password</span>
-              </label>
-              <input 
-                id="password" 
-                name="password" 
-                type="password" 
-                placeholder="Enter your password" 
-                className={clsx('input input-bordered', themedBg(theme, 'bg-gray-700 text-white border-gray-600', 'text-white'))}
-              />
-              {state?.errors?.password && (
-                <div className="mt-2">
-                  <p className="text-sm font-medium text-error">Password must:</p>
-                  <ul className="list-disc list-inside text-sm text-error">
-                    {state.errors.password.map((error) => (
-                      <li key={error}>{error}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-
+          <form onSubmit={handleSubmit(onSubmit)} className="card-body space-y-4">
+            <InputForm label='Name' placeholder='Enter your name' control={control} error={errors.name} name='name' type='text'/>
+            <InputForm label='Email' placeholder='Enter your email'control={control}error={errors.email}name='email'type='email'/>
+            <InputForm label='Password'placeholder='Enter your password'control={control}error={errors.password}name='password'type='password'/>
+            <InputForm label='Confirm Password' placeholder='Confirm your password' control={control} error={errors.confirmPassword}name='confirmPassword'type='password'/>
             <div className="form-control mt-6">
-              <button 
-                type="submit" 
-                disabled={pending} 
-                className={clsx('btn', themedBg(theme, 'btn-primary bg-blue-600 hover:bg-blue-700', 'btn-primary'))}
-              >
-                {pending ? (
-                  <>
-                    <span className="loading loading-spinner"></span>
-                    Signing up...
-                  </>
-                ) : (
-                  'Sign Up'
+              <button
+                type="submit"
+                className={clsx(
+                  'btn w-full',
+                  'btn-primary',
+                  'text-white',
+                  themedBg(theme, 'bg-blue-600 hover:bg-blue-700', 'bg-blue-500 hover:bg-blue-600')
                 )}
+              >
+                Sign Up
               </button>
             </div>
           </form>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SignupForm
+
+export default SignupForm;
