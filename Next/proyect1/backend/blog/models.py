@@ -10,7 +10,8 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='media/posts/', null=True, blank=True)
-
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_posts', blank=True)
+    comments = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='commented_posts', blank=True)
 
     def __str__(self):
         return self.title
