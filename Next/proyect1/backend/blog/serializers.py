@@ -3,9 +3,8 @@ from .models import Post, Comment, Like
 
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Post
-        depth = 1
-        fields = ['id', 'title', 'content', 'created_at', 'updated_at', 'author', 'image', 'likes']
+        model = Post    
+        fields = ['id', 'title', 'content', 'created_at', 'updated_at', 'author', 'image', 'likes', 'dislikes', 'comments']
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import generics
 from rest_framework import status
 from .models import Post, Comment, Like
@@ -12,7 +12,7 @@ from .serializers import PostSerializer, CommentSerializer, LikeSerializer
 class PostList(generics.ListAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def list(self, request):
         posts = self.get_queryset()
@@ -22,7 +22,7 @@ class PostList(generics.ListAPIView):
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get(self, request, pk):
         post = self.get_object()
@@ -31,7 +31,6 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     
     def put(self, request, pk):
         post = self.get_object()
-        permission_classes = [IsAuthenticated]
         serializer = PostSerializer(post, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -39,7 +38,6 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk):
-        permission_classes = [IsAuthenticated]
         post = self.get_object()
         post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
