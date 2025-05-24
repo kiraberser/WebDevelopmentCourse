@@ -24,27 +24,11 @@ class UserViewSet(generics.ListCreateAPIView):
         return Response(serializer.data)
 
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, pk):
-        user = self.get_object()
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
-    
-    def put(self, request, pk):
-        user = self.get_object()
-        serializer = UserSerializer(user, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk):
-        user = self.get_object()
-        user.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    def get_object(self):
+        return self.request.user
 
 class UserRegister(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -58,19 +42,31 @@ class UserRegister(generics.CreateAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class UserLogin(APIView):
-    permission_classes = [AllowAny]
     def post(self, request):
         serializer = UserLoginSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.validated_data
             refresh = RefreshToken.for_user(user)
             access_token = str(refresh.access_token)
+
             response = Response({
                 "user": UserSerializer(user).data
             }, status=status.HTTP_200_OK)
 
-            response.set_cookie(key='access_token', value=access_token, httponly=True, secure=True, samesite='None')
-            response.set_cookie(key='refresh_token', value=str(refresh), httponly=True, secure=True, samesite='Strict')
+            response.set_cookie(
+                key='access_token',
+                value=access_token,
+                httponly=True,
+                secure=False,
+                samesite='Lax'
+            )
+            response.set_cookie(
+                key='refresh_token',
+                value=str(refresh),
+                httponly=True,
+                secure=False,
+                samesite='Lax'
+            )
 
             return response
         return Response(serializer.errors, status=status.HTTP_401_UNAUTHORIZED)
@@ -100,7 +96,7 @@ class CookieTokenVerifyView(TokenRefreshView):
             return Response({
                 "access_token": access_token
             }, status=status.HTTP_200_OK)
-            response.set_cookie(key='access_token', value=access_token, httponly=True, secure=True, samesite='Strict')
+            response.set_cookie(key='access_token', value=access_token, httponly=True, secure=False, samesite='None')
             return response
         except Exception as e:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
