@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.utils.decorators import method_decorator
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -48,24 +50,28 @@ class UserLogin(APIView):
             user = serializer.validated_data
             refresh = RefreshToken.for_user(user)
             access_token = str(refresh.access_token)
-
-            response = Response({
-                "user": UserSerializer(user).data
-            }, status=status.HTTP_200_OK)
+            data = {
+                "user": UserSerializer(user).data,
+                "token": {
+                    "access_token": access_token,
+                    "refresh_token": str(refresh),
+                }
+            }
+            response = Response(data, status=status.HTTP_200_OK)
 
             response.set_cookie(
                 key='access_token',
                 value=access_token,
                 httponly=True,
-                secure=False,
-                samesite='Lax'
+                secure=True,
+                samesite='None',
             )
             response.set_cookie(
                 key='refresh_token',
                 value=str(refresh),
                 httponly=True,
-                secure=False,
-                samesite='Lax'
+                secure=True,
+                samesite='None',
             )
 
             return response
@@ -93,10 +99,10 @@ class CookieTokenVerifyView(TokenRefreshView):
         try:
             refresh = RefreshToken(refresh_token)
             access_token = str(refresh.access_token)
+            response.set_cookie(key='access_token', value=access_token, httponly=True, secure=False, samesite='None')
             return Response({
                 "access_token": access_token
             }, status=status.HTTP_200_OK)
-            response.set_cookie(key='access_token', value=access_token, httponly=True, secure=False, samesite='None')
             return response
         except Exception as e:
             return Response(status=status.HTTP_401_UNAUTHORIZED)

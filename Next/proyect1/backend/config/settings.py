@@ -36,6 +36,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     'localhost:3000',
+    'b0b2-187-241-9-134.ngrok-free.app'
 ]
 
 
@@ -45,13 +46,13 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
-    "corsheaders",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "corsheaders",
     'users',
     'blog',
     'api'
@@ -171,23 +172,29 @@ SIMPLE_JWT = {
 }
 
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "https://b0b2-187-241-9-134.ngrok-free.app"
+]
+
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:3000',
+    "https://b0b2-187-241-9-134.ngrok-free.app"
 ]
-
-CSRF_COOKIE_SECURE = False
-CSRF_COOKIE_HTTPONLY = True
-CSRF_COOKIE_SAMESITE = 'Lax'
-
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-]
-
-CORS_URLS_REGEX = r"^/api/.*$"
 
 CORS_ALLOW_CREDENTIALS = True
 
+CSRF_COOKIE_SAMESITE = 'None'  # o 'None' si usas HTTPS
+CSRF_COOKIE_SECURE = True    # True si estás en producción (HTTPS)
+
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SAMESITE = 'None'
+
+CORS_URLS_REGEX = r"^/api/.*$"
+
 CORS_ALLOW_ALL_ORIGINS = False
+CORS_ORIGIN_ALLOW_ALL = False  # ✅ correcto
+
 
 CORS_ALLOW_HEADERS = (
     "accept",
