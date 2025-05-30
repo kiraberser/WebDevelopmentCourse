@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const schema = z.object({
+export const schemaSignup = z.object({
   name: z.string().min(1, 'Name is required').max(50, 'Name must be less than 50 characters'),
   email: z.string().email('Invalid email address'),
   password: z
@@ -16,4 +16,10 @@ export const schema = z.object({
   path: ['confirmPassword'],
 });
 
-export type FormValues = z.infer<typeof schema>;
+export const schemaLogin = z.object({
+  email: z.string().email('Invalid email address'),
+  password: z.string().min(1, 'Password is required'),
+});
+
+export type FormValuesSignup = z.infer<typeof schemaSignup>;
+export type FormValuesLogin = z.infer<typeof schemaLogin>;
