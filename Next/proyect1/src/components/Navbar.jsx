@@ -23,7 +23,9 @@ const Navbar = () => {
         <div className="container mx-auto flex justify-between items-center">
           {/* Logo o título del sitio (opcional) */}
           <div className={`font-bold text-xl ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
-            Logo
+            <Link href="/">
+              Logo
+            </Link>
           </div>
           
           {/* Botón de menú hamburguesa para móviles */}

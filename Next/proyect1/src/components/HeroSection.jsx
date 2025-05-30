@@ -1,28 +1,34 @@
 'use client'
+
 import Link from "next/link"
+import { useContext, useState, useEffect, useRef } from "react"
+
 import { ThemeContext } from "../contexts/ThemeContext/ThemeContext"
-import { useContext, useState, useEffect } from "react"
+import { getProfileClient } from "@/utils/clientProfile"
 
 export default function HeroSection({ scrollProgress, onScrollToFeatures }) {
   const { theme } = useContext(ThemeContext)
   const [userName, setUserName] = useState('')
+  const profileFetchedRef = useRef(false)
 
   useEffect(() => {
-    // Función para obtener el nombre del usuario
-    const getUserName = async () => {
+    if (!profileFetchedRef.current) {
       try {
-        const response = await fetch('http://localhost:3000/api/user')
-        const data = await response.json()
-        if (data.userId) {
-          setUserName(data.userId)
+        const getUserName = async () => {
+          const response = await getProfileClient();
+          console.log(response)
+          if (response && response.username) {
+             setUserName(response.username)
+          }
         }
+        getUserName();
       } catch (error) {
-        console.error('Error fetching user data:', error)
+        console.error('Error al obtener el nombre de usuario:', error)
+      } finally {
+        profileFetchedRef.current = true;
       }
     }
-
-    getUserName()
-  }, [])
+  }, []);
 
   return (
     <section className="h-screen flex items-center justify-center relative overflow-hidden"
@@ -74,12 +80,11 @@ export default function HeroSection({ scrollProgress, onScrollToFeatures }) {
             </Link> :
             <Link
               className="bg-black m-2 text-white px-8 py-3 rounded-full font-semibold hover:bg-opacity-90 transition-all transform hover:scale-105"
-              href={'http://localhost:3000/sign-up/'}
+              href={'http://localhost:3000/signup/'}
             >
               Sign Up
             </Link>
         }
-
       </div>
     </section>
   )
