@@ -1,9 +1,9 @@
 import NewList from "@/components/list"
 import { getLatestNews } from "@/lib/news"
 
-function LatestNewPage() {
+async function LatestNewPage() {
 
-  const latestNews = getLatestNews()
+  const latestNews = await getLatestNews()
   return (
     <div>
       <h1>Latest Page!</h1>
